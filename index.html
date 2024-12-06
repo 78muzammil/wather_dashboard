@@ -4,102 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Birthday Countdown Timer</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://marketplace.canva.com/EAE3Aqbdu8g/1/0/1600w/canva-happy-birthday-%28desktop-wallpaper%29-snCnYKntGuI.jpg'); /* Add your desired background image */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: rgba(255, 235, 205, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px); /* For a frosted glass effect */
+        }
+
+        h1, h2 {
+            color: #000000;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .countdown p, .clock p {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #000000;
+        }
+
+        .wish-message p {
+            font-size: 1.5rem;
+            color: #000000;
+            margin-top: 10px;
+        }
+
+        /* Tachymeter watch styling */
+        .tachymeter {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 8px solid #32cd32;
+            background: radial-gradient(circle, #ffebcd, #000000);
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .tachymeter .tick {
+            position: absolute;
+            width: 3px;
+            height: 8px;
+            background-color: #000000;
+            top: 12px;
+            left: 50%;
+            transform-origin: 50% 100%;
+            transform: translateX(-50%);
+        }
+
+        .tachymeter .hand {
+            position: absolute;
+            width: 3px;
+            height: 60px;
+            background-color: #32cd32;
+            top: 50%;
+            left: 50%;
+            transform-origin: 50% 100%;
+            transform: translateX(-50%) translateY(-100%);
+            transition: transform 0.5s ease-in-out;
+        }
+
+        /* Digital Clock Styling */
+        .digital-clock {
+            font-size: 2.5rem;
+            color: #000000;
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1, h2 {
+                font-size: 2rem;
+            }
+
+            .countdown p, .clock p, .birthday-message h2, .wish-message p {
+                font-size: 1.2rem;
+            }
+
+            .tachymeter {
+                width: 150px;
+                height: 150px;
+            }
+
+            .digital-clock {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1, h2 {
+                font-size: 1.5rem;
+            }
+
+            .countdown p, .clock p, .birthday-message h2, .wish-message p {
+                font-size: 1rem;
+            }
+
+            .tachymeter {
+                width: 120px;
+                height: 120px;
+            }
+
+            .digital-clock {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
-<style type="text/css">
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f8ff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    text-align: center;
-}
-
-.container {
-    background-color: #ffebcd;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    color: #ff6347;
-}
-
-.countdown p, .clock p {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-.birthday-message h2 {
-    color: #32cd32;
-    font-size: 2.5rem;
-    margin-top: 30px;
-}
-
-.wish-message p {
-    font-size: 1.5rem;
-    color: #ff6347;
-    margin-top: 10px;
-}
-
-@media (max-width: 600px) {
-    .countdown p, .clock p, .birthday-message h2, .wish-message p {
-        font-size: 1.5rem;
-    }
-}
-
-/* Tachymeter watch styling */
-.tachymeter {
-    position: relative;
-    width: 150px; /* Reduced size */
-    height: 150px; /* Reduced size */
-    border-radius: 50%;
-    border: 8px solid #32cd32; /* Reduced border width */
-    background: radial-gradient(circle, #ffebcd, #ff6347);
-    margin-top: 30px;
-}
-
-.tachymeter .tick {
-    position: absolute;
-    width: 3px;
-    height: 8px;
-    background-color: #ff6347;
-    top: 12px;
-    left: 50%;
-    transform-origin: 50% 100%;
-    transform: translateX(-50%);
-}
-
-.tachymeter .hand {
-    position: absolute;
-    width: 3px;
-    height: 60px; /* Reduced hand size */
-    background-color: #32cd32;
-    top: 50%;
-    left: 50%;
-    transform-origin: 50% 100%;
-    transform: translateX(-50%) translateY(-100%);
-    transition: transform 0.5s ease-in-out;
-}
-
-/* Digital Clock Styling */
-.digital-clock {
-    font-size: 2.5rem;
-    color: #ff6347;
-    font-weight: bold;
-    margin-top: 30px;
-}
-</style>
 <body>
     <div class="container">
         <h1>🎉 7 November 2025 🎉</h1>
