@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Countdown Timer</title>
+</head>
+<style type="text/css">
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.container {
+    background-color: #ffebcd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #ff6347;
+}
+
+.countdown p, .clock p {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.birthday-message h2 {
+    color: #32cd32;
+    font-size: 2.5rem;
+    margin-top: 30px;
+}
+
+.wish-message p {
+    font-size: 1.5rem;
+    color: #ff6347;
+    margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .countdown p, .clock p, .birthday-message h2, .wish-message p {
+        font-size: 1.5rem;
+    }
+}
+
+/* Tachymeter watch styling */
+.tachymeter {
+    position: relative;
+    width: 150px; /* Reduced size */
+    height: 150px; /* Reduced size */
+    border-radius: 50%;
+    border: 8px solid #32cd32; /* Reduced border width */
+    background: radial-gradient(circle, #ffebcd, #ff6347);
+    margin-top: 30px;
+}
+
+.tachymeter .tick {
+    position: absolute;
+    width: 3px;
+    height: 8px;
+    background-color: #ff6347;
+    top: 12px;
+    left: 50%;
+    transform-origin: 50% 100%;
+    transform: translateX(-50%);
+}
+
+.tachymeter .hand {
+    position: absolute;
+    width: 3px;
+    height: 60px; /* Reduced hand size */
+    background-color: #32cd32;
+    top: 50%;
+    left: 50%;
+    transform-origin: 50% 100%;
+    transform: translateX(-50%) translateY(-100%);
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Digital Clock Styling */
+.digital-clock {
+    font-size: 2.5rem;
+    color: #ff6347;
+    font-weight: bold;
+    margin-top: 30px;
+}
+</style>
+<body>
+    <div class="container">
+        <h1>🎉 7 November 2025 🎉</h1>
+        <h1>🎉 Birthday Countdown for Rohan 🎉</h1>
+        <div class="countdown">
+            <p id="countdown-timer"></p>
+        </div>
+        <div class="clock">
+            <p id="live-time"></p>
+        </div>
+        <div class="birthday-message">
+            <h2>🎂 Happy Birthday Rohan! 🎂</h2>
+        </div>
+        <div class="wish-message">
+            <p>🎉 Wishing you a wonderful year ahead, Rohan! 🎉</p>
+            <p>🎁 May all your dreams come true! 🎁</p>
+            <p>🎈 Advance Happy Birthday, Rohan! 🎈</p>
+            <p>🎊 Enjoy every moment of your special day! 🎊</p>
+        </div>
+
+        <!-- Tachymeter Watch -->
+        <div class="tachymeter">
+            <!-- Seconds hand -->
+            <div id="tachymeter-hand" class="hand"></div>
+            <!-- Tachymeter ticks (just for decoration) -->
+            <div class="tick" style="transform: rotate(0deg);"></div>
+            <div class="tick" style="transform: rotate(30deg);"></div>
+            <div class="tick" style="transform: rotate(60deg);"></div>
+            <div class="tick" style="transform: rotate(90deg);"></div>
+            <div class="tick" style="transform: rotate(120deg);"></div>
+            <div class="tick" style="transform: rotate(150deg);"></div>
+            <div class="tick" style="transform: rotate(180deg);"></div>
+            <div class="tick" style="transform: rotate(210deg);"></div>
+            <div class="tick" style="transform: rotate(240deg);"></div>
+            <div class="tick" style="transform: rotate(270deg);"></div>
+            <div class="tick" style="transform: rotate(300deg);"></div>
+            <div class="tick" style="transform: rotate(330deg);"></div>
+        </div>
+
+        <!-- Digital Clock Display -->
+        <div class="digital-clock">
+            <p id="digital-time"></p>
+        </div>
+    </div>
+
+    <script>
+        // Birthday date
+        const birthday = new Date("Nov 7, 2025 00:00:00").getTime();
+
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeLeft = birthday - now;
+            
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown-timer").innerHTML = 
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown-timer").innerHTML = "Happy Birthday Rohan!";
+            }
+        }
+
+        // Live clock (Digital)
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+
+            document.getElementById("live-time").innerHTML = `${hours}:${minutes}:${seconds}`;
+            document.getElementById("digital-time").innerHTML = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Update tachymeter hand based on seconds
+        function updateTachymeter() {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const degree = (seconds * 6); // 360 / 60 = 6 degrees per second
+            const hand = document.getElementById("tachymeter-hand");
+            hand.style.transform = `translateX(-50%) translateY(-100%) rotate(${degree}deg)`;
+        }
+
+        // Update every second
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        setInterval(updateClock, 1000);
+        setInterval(updateTachymeter, 1000); // Update tachymeter every second
+    </script>
+</body>
+</html>
